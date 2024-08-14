@@ -39,6 +39,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       const userCart = localStorage.getItem(`cart_${user.sub}`);
       if (userCart) {
         setCart(JSON.parse(userCart));
+        console.log({userCart})
       }
     }
   }, [isAuthenticated, user]);
@@ -46,6 +47,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   useEffect(() => {
     if (isAuthenticated && user) {
       localStorage.setItem(`cart_${user.sub}`, JSON.stringify(cart));
+       console.log(`cart_${user.sub} USER i think`)
     }
   }, [cart, isAuthenticated, user]);
 
@@ -95,8 +97,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
 export const useCart = () => {
   const context = useContext(ContextCart);
-  if (context === undefined) {
-    throw new Error('useCart must be used within a CartProvider');
-  }
+  
   return context;
 };
