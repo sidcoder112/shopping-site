@@ -1,10 +1,10 @@
 
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/ContextCart';
-import LoginButton from './LoginButton';
+import LoginButton from '../auth-login/LoginButton';
 import { useAuth0 } from '@auth0/auth0-react';
-import Profile from './Profile';
-import LogoutButton from './LogoutButton';
+import Profile from '../auth-login/Profile';
+import LogoutButton from '../auth-login/LogoutButton';
 
 interface HeaderProps {
   showCartButton?: boolean;

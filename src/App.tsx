@@ -8,7 +8,7 @@ import { CartProvider } from './context/ContextCart';
 import RemoveItem from './components/RemoveItem';
 import UpdateItem from './components/UpdateItem';
 import NoPage from './components/NoPage';
-import ProfilePage from './components/ProfilePage';
+import ProfilePage from './auth-login/ProfilePage';
 import Checkout from './components/Checkout';
 import Statistics from './components/Statistics';
 

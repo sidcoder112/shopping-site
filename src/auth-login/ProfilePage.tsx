@@ -1,8 +1,7 @@
 
 import { useAuth0 } from "@auth0/auth0-react";
-import Header from "./Header";
+import Header from "../components/Header";
 import { Link } from "react-router-dom";
-import Footer from "./Footer";
 const ProfilePage = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
@@ -33,7 +32,7 @@ const ProfilePage = () => {
             Go Home
           </button>
       </Link>
-       <Footer />
+     
        </div>
     </div>
       
