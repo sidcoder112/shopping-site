@@ -38,8 +38,7 @@ const ProductDetails = () => {
     <div>
       <Header />
       <div className="p-4">
-        {/* New wrapping div for spacing */}
-        <div className="mb-60"> {/* Adds margin-bottom to create space before footer */}
+        <div className="mb-60"> 
           <div className="flex flex-col md:flex-row">
             <img src={product?.image} alt={product?.title} className="w-full md:w-1/2 object-contain mb-4 md:mb-0" />
             <div className="md:ml-4 flex-1">

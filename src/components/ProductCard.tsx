@@ -19,7 +19,6 @@ interface ProductCardProps {
   product: Product;
   onAddToCart: () => void;
 }
-
 const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
   const { isAuthenticated } = useAuth0();
 
