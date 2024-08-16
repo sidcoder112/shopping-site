@@ -1,4 +1,7 @@
-import { useCart } from '../context/ContextCart';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../store/store';
+import { removeFromCart, increaseQuantity, decreaseQuantity } from '../store/cartSlice';
+
 import { Link, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -12,7 +15,8 @@ interface CartItem {
 }
 
 const Cart = () => {
-  const { cart, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
+  const dispatch: AppDispatch = useDispatch();
+  const cart = useSelector((state: RootState) => state.cart.cart);
   const { isAuthenticated, loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
 
@@ -28,7 +32,8 @@ const Cart = () => {
     }
   };
 
-  return (
+  return isAuthenticated? (
+
     <div>
       <Header showCartButton={false} />
       <div className="p-4">
@@ -50,19 +55,19 @@ const Cart = () => {
                 <div className="flex space-x-2">
                   <button
                     className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
-                    onClick={() => increaseQuantity(item.id)}
+                    onClick={() => dispatch(increaseQuantity(item.id))}
                   >
                     +
                   </button>
                   <button
                     className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                    onClick={() => decreaseQuantity(item.id)}
+                    onClick={() => dispatch(decreaseQuantity(item.id))}
                   >
                     -
                   </button>
                   <button
                     className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                    onClick={() => removeFromCart(item.id)}
+                    onClick={() => dispatch(removeFromCart(item.id))}
                   >
                     Remove
                   </button>
@@ -89,7 +94,7 @@ const Cart = () => {
         </div>
       </div>
     </div>
-  );
+  ):<div>noo access</div>;
 };
 
 export default Cart;

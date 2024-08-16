@@ -49,7 +49,7 @@ function Chart({ data, selectedCategory, setSelectedCategory }: ChartProps) {
   const filteredData = selectedCategory === 'All' ? data : data.filter(item => item.category === selectedCategory);
 
   const chartData: ChartData<'line' | 'bar'> = {
-    labels: filteredData.map(item => item.title.length > 15 ? item.title.slice(0, 15) + '...' : item.title),
+    labels: filteredData.map(item => item.title.length > 17 ? item.title.slice(0, 17) + '..' : item.title),
     datasets: [
       {
         label: 'Price',
