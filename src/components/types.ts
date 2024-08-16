@@ -1,6 +1,4 @@
-// src/types.ts
 
-// Define the Product type to match your application's needs
 export interface Product {
     id: number;
     title: string;
@@ -12,8 +10,8 @@ export interface Product {
       rate: number;
       count: number;
     };
-    quantity?: number; // Optional, if not always present
+    quantity?: number; // Optional, 
   }
   
-  // Define any other types you need here
+  
   

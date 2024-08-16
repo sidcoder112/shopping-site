@@ -24,7 +24,7 @@ const CartManager = () => {
     }
   }, [isAuthenticated, user, dispatch]);
 
-  // Save the cart to localStorage based on user or guest
+ 
   useEffect(() => {
     if (isAuthenticated && user) {
       localStorage.setItem(`cart_${user.sub}`, JSON.stringify(cart));
