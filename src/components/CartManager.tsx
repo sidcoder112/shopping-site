@@ -8,8 +8,8 @@ const CartManager = () => {
   const { isAuthenticated, user } = useAuth0();
   const cart = useSelector((state: RootState) => state.cart.cart);
   const dispatch = useDispatch();
-
-  // Load the cart for the authenticated user or guest
+// Load the cart for the authenticated user or guest
+  
   useEffect(() => {
     if (isAuthenticated && user) {
       const userCart = localStorage.getItem(`cart_${user.sub}`);

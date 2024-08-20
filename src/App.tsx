@@ -13,14 +13,14 @@ import NoPage from './components/NoPage';
 import ProfilePage from './auth-login/ProfilePage';
 import Checkout from './components/Checkout';
 import Statistics from './components/Statistics';
-import CartManager from './components/CartManager'; // Import CartManager component
+import CartManager from './components/CartManager'; 
 
 const App = () => {
   return (
     <PersistGate loading={null} persistor={persistor}>
       <Provider store={store}>
         <Router>
-          <CartManager /> {/* Render CartManager here */}
+          <CartManager /> 
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetails />} />

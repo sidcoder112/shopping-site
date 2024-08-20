@@ -7,6 +7,7 @@ import Footer from './Footer';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store/store';
 import { addToCart } from '../store/cartSlice';
+import Carousel from './Carousel';
 
 interface Product {
   image: string;
@@ -28,22 +29,43 @@ const Home = () => {
   const [category, setCategory] = useState('');
   const [sort, setSort] = useState('');
   const [areYouLoading, setAreYouLoading] = useState(true);
+  const [featuredImages, setFeaturedImages] = useState<string[]>([]);
+  const [featuredProductIds, setFeaturedProductIds] = useState<number[]>([]); 
 
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('https://fakestoreapi.com/products');
+        const data = response.data;
+        setProducts(data);
+        setAreYouLoading(false);
+        setFeaturedImages(getFeaturedImages(data));
+        setFeaturedProductIds(getFeaturedProductIds(data)); 
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setAreYouLoading(false);
+      }
+    };
 
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get('https://fakestoreapi.com/products');
-      setProducts(response.data);
-      setAreYouLoading(false);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      setAreYouLoading(false);
-    }
+    fetchProducts();
+  }, []); 
+
+  const getFeaturedImages = (products: Product[]): string[] => {
+    const categories = Array.from(new Set(products.map(product => product.category)));
+    return categories.map(category => {
+      const featuredProduct = products.find(product => product.category === category);
+      return featuredProduct ? featuredProduct.image : '';
+    });
+  };
+
+  const getFeaturedProductIds = (products: Product[]): number[] => {
+    const categories = Array.from(new Set(products.map(product => product.category)));
+    return categories.map(category => {
+      const featuredProduct = products.find(product => product.category === category);
+      return featuredProduct ? featuredProduct.id : 0;
+    });
   };
 
   const filteredProducts = products
@@ -75,7 +97,7 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <div className="p-4">
+      <div className="p-4 mb-10">
         <SearchBar value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         <div className="flex flex-col sm:flex-row items-center justify-between mb-4">
           <select className="border p-2 mb-2 sm:mb-0" value={category} onChange={(e) => setCategory(e.target.value)}>
@@ -93,6 +115,10 @@ const Home = () => {
             <option value="rating-desc">Rating: High to Low</option>
           </select>
         </div>
+        <div className="mb-10 py-20 px-20">
+          <h2 className="text-2xl font-bold mb-4">Featured Products</h2>
+          <Carousel images={featuredImages} productIds={featuredProductIds} />
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} onAddToCart={() => dispatch(addToCart(product))} />
@@ -105,5 +131,3 @@ const Home = () => {
 };
 
 export default Home;
-
-

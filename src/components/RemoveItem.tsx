@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { removeFromCart } from '../store/cartSlice'; // Import removeFromCart action
+import { removeFromCart } from '../store/cartSlice'; 
 import Header from './Header';
-import Alert from './Alert'; // Import the Alert component
+import Alert from './Alert'; 
 
 interface Product {
   id: number;
@@ -24,7 +24,7 @@ const RemoveItem = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // Use Redux's dispatch
+  const dispatch = useDispatch(); 
 
   useEffect(() => {
     axios.get(`https://fakestoreapi.com/products/${id}`)
@@ -39,11 +39,11 @@ const RemoveItem = () => {
   const handleDelete = () => {
     axios.delete(`https://fakestoreapi.com/products/${id}`)
       .then(() => {
-        dispatch(removeFromCart(Number(id))); // Remove the product from Redux cart
+        dispatch(removeFromCart(Number(id))); 
         setAlertMessage('Product deleted successfully.');
         setTimeout(() => {
           navigate('/');
-        }, 2000); // Navigate after 2 seconds to show the alert
+        }, 2000); 
       })
       .catch(error => {
         console.error('Error deleting product:', error);

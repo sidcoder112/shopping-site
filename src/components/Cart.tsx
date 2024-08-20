@@ -1,28 +1,42 @@
+// src/components/Cart.tsx
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store/store';
 import { removeFromCart, increaseQuantity, decreaseQuantity } from '../store/cartSlice';
-
 import { Link, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import { useAuth0 } from '@auth0/auth0-react';
-
-interface CartItem {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-  quantity: number;
-}
+import { useState } from 'react';
+import CartItem from './CartItem';
+import PromoCodeSection from './PromoCodeSection';
+import CartSummary from './CartSummary';
+import { getDiscount } from '../utils/promoCodes';
 
 const Cart = () => {
   const dispatch: AppDispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart.cart);
   const { isAuthenticated, loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
+  
+  const [promoCode, setPromoCode] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [shipping, setShipping] = useState('Standard Shipping');
+  const [error, setError] = useState('');
+
+  const handlePromoCode = () => {
+    const discountValue = getDiscount(promoCode);
+    if (discountValue > 0) {
+      setDiscount(discountValue);
+      setError('');
+    } else {
+      setError('Invalid promo code');
+      setDiscount(0);
+    }
+  };
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const tax = total * 0.16;
-  const true_total = total + tax;
+  const discountAmount = total * discount;
+  const true_total = total + tax - discountAmount;
 
   const handleCheckout = () => {
     if (!isAuthenticated) {
@@ -32,69 +46,76 @@ const Cart = () => {
     }
   };
 
-  return isAuthenticated? (
+  const isCartEmpty = cart.length === 0;
 
-    <div>
+  return (
+    <div className="bg-gray-100 min-h-screen">
       <Header showCartButton={false} />
-      <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
-        <div className="mb-4">
-          {cart.length === 0 ? (
-            <p>Cart is empty.</p>
-          ) : (
-            cart.map((item: CartItem) => (
-              <div key={item.id} className="flex justify-between items-center border-b py-2">
-                <div className="flex items-center">
-                  <img src={item.image} alt={item.title} className="w-20 h-20 object-cover mr-4" />
-                  <div>
-                    <h3 className="text-lg font-semibold">{item.title}</h3>
-                    <p>${item.price.toFixed(2)}</p>
-                    <p>Quantity: {item.quantity}</p>
-                  </div>
-                </div>
-                <div className="flex space-x-2">
-                  <button
-                    className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
-                    onClick={() => dispatch(increaseQuantity(item.id))}
-                  >
-                    +
-                  </button>
-                  <button
-                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                    onClick={() => dispatch(decreaseQuantity(item.id))}
-                  >
-                    -
-                  </button>
-                  <button
-                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                    onClick={() => dispatch(removeFromCart(item.id))}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-        <div className="text-right font-bold">Tax: ${tax.toFixed(2)}</div>
-        <div className="text-right font-bold">Total: ${true_total.toFixed(2)}</div>
+      <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">Shopping Cart</h1>
         
-        <div className="mt-4 flex justify-between">
+        {isCartEmpty ? (
+          <p className="text-gray-600">Cart is empty.</p>
+        ) : (
+          <div className="mb-6">
+            {cart.map(item => (
+              <CartItem
+                key={item.id}
+                item={item}
+                increaseQuantity={() => dispatch(increaseQuantity(item.id))}
+                decreaseQuantity={() => dispatch(decreaseQuantity(item.id))}
+                removeFromCart={() => dispatch(removeFromCart(item.id))}
+              />
+            ))}
+          </div>
+        )}
+
+        <PromoCodeSection
+          promoCode={promoCode}
+          setPromoCode={setPromoCode}
+          handlePromoCode={handlePromoCode}
+          error={error}
+          discount={discount}
+          isCartEmpty={isCartEmpty}
+        />
+
+        <div className="mb-6">
+          <label htmlFor="shipping" className="block text-gray-700 mb-2">Shipping</label>
+          <select
+            id="shipping"
+            value={shipping}
+            onChange={(e) => setShipping(e.target.value)}
+            className="border rounded px-4 py-2 w-full"
+            disabled={isCartEmpty}
+          >
+            <option>Standard Shipping</option>
+          </select>
+        </div>
+
+        <CartSummary
+          total={total}
+          tax={tax}
+          discountAmount={discountAmount}
+          true_total={true_total}
+        />
+
+        <div className="flex justify-between">
           <Link to="/">
-            <button className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+            <button className="bg-gray-600 text-white px-6 py-3 rounded hover:bg-gray-700">
               Go Home
             </button>
           </Link>
           <button
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            className={`bg-green-500 text-white px-6 py-3 rounded hover:bg-green-600 ${isCartEmpty ? 'bg-gray-400 cursor-not-allowed' : ''}`}
             onClick={handleCheckout}
+            disabled={isCartEmpty}
           >
             Checkout
           </button>
         </div>
       </div>
     </div>
-  ):<div>noo access</div>;
+  );
 };
 
 export default Cart;

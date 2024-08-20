@@ -1,7 +1,7 @@
 // Header.tsx
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store'; // Adjust the import path based on your file structure
+import { RootState } from '../store/store';
 import LoginButton from '../auth-login/LoginButton';
 import { useAuth0 } from '@auth0/auth0-react';
 import Profile from '../auth-login/Profile';
@@ -12,46 +12,43 @@ interface HeaderProps {
 }
 
 const Header = ({ showCartButton = true }: HeaderProps) => {
-  // Use Redux hook to access the cart state
   const cart = useSelector((state: RootState) => state.cart.cart);
   const { isAuthenticated } = useAuth0();
 
   return (
-    <header className="sticky top-0 z-50 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400  p-4 flex space-x-2 justify-between items-center text-white">
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-4 shadow-lg flex flex-wrap items-center justify-between text-white">
       <div className="flex items-center space-x-4">
         <Link to="/" className="text-2xl font-bold">
           <h1 className="text-2xl font-sans">Sidharth Store 🏪</h1>
         </Link>
         {isAuthenticated && (
-          <Link to="/add-item">
-            <button className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 text-white px-4 py-2  border-solid border-2 border-white rounded hover:bg-blue-700">
-              Add Item
-            </button>
-          </Link>
-        )}
-        {isAuthenticated && (
-          <Link to="/Statistics">
-            <button className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 text-white px-4 py-2  border-solid border-2 border-white rounded hover:bg-blue-700">
-              Statistics
-            </button>
-          </Link>
+          <>
+            <Link to="/add-item">
+              <button className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-4 py-2 border rounded hover:bg-gradient-to-l focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                Add Item
+              </button>
+            </Link>
+            <Link to="/Statistics">
+              <button className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-4 py-2 border rounded hover:bg-gradient-to-l focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                Dashboard
+              </button>
+            </Link>
+          </>
         )}
       </div>
       <div className="flex items-center space-x-4">
         {showCartButton && (
           <Link to="/cart">
-            <button className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 text-white  border-solid border-2 border-white rounded px-5 py-4">
-              Cart ({cart.length})
+            <button className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white border rounded px-4 py-2 flex items-center space-x-2">
+              <span>Cart ({cart.length})</span>
             </button>
           </Link>
         )}
         {isAuthenticated ? (
           <div className="flex items-center space-x-4">
-            <div>
-              <Link to="/ProfilePage">
-                <Profile />
-              </Link>
-            </div>
+            <Link to="/ProfilePage">
+              <Profile />
+            </Link>
             <LogoutButton />
           </div>
         ) : (
@@ -63,5 +60,3 @@ const Header = ({ showCartButton = true }: HeaderProps) => {
 };
 
 export default Header;
-
-

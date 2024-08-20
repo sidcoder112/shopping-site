@@ -1,5 +1,4 @@
-import { Line, Bar, Pie } from 'react-chartjs-2'; 
-import Header from './Header';
+import { Line, Bar, Pie } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import {
   Chart as ChartJS,
@@ -152,7 +151,7 @@ function Chart({ data, selectedCategory, setSelectedCategory }: ChartProps) {
   
   return (
     <div>
-      <Header />
+      
       <div className="p-6">
         <div className="mb-6">
           <label htmlFor="category-select" className="block text-gray-700">Select Category:</label>
