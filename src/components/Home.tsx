@@ -98,10 +98,14 @@ const Home = () => {
     <div>
       <Header />
       <div className="p-4 mb-10">
+      <div className="mb-10 py-10 px-20">
+          <h2 className="text-2xl font-thin mb-4">Featured Products</h2>
+          <Carousel images={featuredImages} productIds={featuredProductIds} />
+        </div>
         <SearchBar value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         <div className="flex flex-col sm:flex-row items-center justify-between mb-4">
           <select className="border p-2 mb-2 sm:mb-0" value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="">All Categories</option>
+            <option value="">Select Category</option>
             <option value="electronics">Electronics</option>
             <option value="jewelery">Jewelery</option>
             <option value="men's clothing">Men's Clothing</option>
@@ -115,10 +119,7 @@ const Home = () => {
             <option value="rating-desc">Rating: High to Low</option>
           </select>
         </div>
-        <div className="mb-10 py-20 px-20">
-          <h2 className="text-2xl font-bold mb-4">Featured Products</h2>
-          <Carousel images={featuredImages} productIds={featuredProductIds} />
-        </div>
+       
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} onAddToCart={() => dispatch(addToCart(product))} />

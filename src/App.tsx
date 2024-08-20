@@ -14,6 +14,8 @@ import ProfilePage from './auth-login/ProfilePage';
 import Checkout from './components/Checkout';
 import Statistics from './components/Statistics';
 import CartManager from './components/CartManager'; 
+import FAQ from './components/FAQ';
+import ContactForm from './components/ContactForm';
 
 const App = () => {
   return (
@@ -29,9 +31,11 @@ const App = () => {
             <Route path="/remove/:id" element={<RemoveItem />} /> 
             <Route path="/update/:id" element={<UpdateItem />} />
             <Route path="*" element={<NoPage />} />
+            <Route path="/faq" element={<FAQ />} />
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/ProfilePage" element={<ProfilePage />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/contact-us" element={<ContactForm />} />
           </Routes>
         </Router>
       </Provider>
