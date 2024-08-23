@@ -1,4 +1,4 @@
-// src/components/Checkout.tsx
+
 import { useEffect } from 'react';
 import Header from './Header';
 import { useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import Invoice from './Invoice';
+import Footer from './Footer';
 
 const Checkout = () => {
   const cart = useSelector((state: RootState) => state.cart.cart);
@@ -30,8 +31,8 @@ const Checkout = () => {
     if (content) {
       html2canvas(content).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
-        const imgWidth = 210; // A4 width in mm
-        const pageHeight = 295; // A4 height in mm
+        const imgWidth = 210; 
+        const pageHeight = 295; 
         const imgHeight = canvas.height * imgWidth / canvas.width;
         let heightLeft = imgHeight;
 
@@ -76,6 +77,7 @@ const Checkout = () => {
           </button>
         </Link>
       </div>
+      <Footer />
     </div>
   );
 };

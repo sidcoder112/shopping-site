@@ -10,6 +10,7 @@ import CartItem from './CartItem';
 import PromoCodeSection from './PromoCodeSection';
 import CartSummary from './CartSummary';
 import { getDiscount } from '../utils/promoCodes';
+import Footer from './Footer';
 
 const Cart = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -51,7 +52,7 @@ const Cart = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       <Header showCartButton={false} />
-      <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
+      <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md mb-12">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">Shopping Cart</h1>
         
         {isCartEmpty ? (
@@ -114,6 +115,7 @@ const Cart = () => {
           </button>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

@@ -29,7 +29,7 @@ const CartManager = () => {
     if (isAuthenticated && user) {
       localStorage.setItem(`cart_${user.sub}`, JSON.stringify(cart));
     } else {
-      localStorage.setItem('guest_cart', JSON.stringify(cart));
+      localStorage.setItem('guest_cart', JSON.stringify(cart));//not working as planned
     }
   }, [cart, isAuthenticated, user]);
 

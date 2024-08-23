@@ -5,6 +5,7 @@ import Chart from './Chart';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Navigate } from 'react-router-dom';
 import Header from './Header';
+import Footer from './Footer';
 interface Rating {
   rate: number;
   count: number;
@@ -132,6 +133,7 @@ function Statistics() {
             />
           </div>
         </div>
+        <Footer />
       </div>  
   );
 }

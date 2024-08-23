@@ -18,8 +18,8 @@ const Invoice = ({ cart, total, tax, true_total }: InvoiceProps) => {
     <div id="invoice-content" className="p-6 max-w-xl mx-auto bg-white rounded-lg shadow-lg mt-10">
       <header className="text-center mb-6">
         <h1 className="text-2xl font-bold">Sidharth Store</h1>
-        <p className="text-gray-700">123 Market Street, Cityville, ST 12345</p>
-        <p className="text-gray-500">Phone: (123) 456-7890 | Email: support@sidharthstore.com</p>
+        <p className="text-gray-700">Vytilla Hub, Vytila 671102</p>
+        <p className="text-gray-500">Phone: 123-4567890 | Email: support@sidharthstore.com</p>
         <hr className="my-4" />
         <h2 className="text-xl font-semibold">Receipt</h2>
       </header>

@@ -45,7 +45,7 @@ const ItemForm = ({ initialData, onSubmit }: ItemFormProps) => {
     let formIsValid = true;
     const validationErrors: Partial<ChangeItem> = {};
 
-    // Ensure price is a string
+    
     const priceString = formData.price.toString().trim();
     const trimmedTitle = formData.title.trim();
     const trimmedDescription = formData.description.trim();
@@ -56,7 +56,7 @@ const ItemForm = ({ initialData, onSubmit }: ItemFormProps) => {
       formIsValid = false;
     }
 
-    // Validate price: positive number, up to 1 million, with up to 2 decimal places
+    
     const numericPrice = parseFloat(priceString);
     
     if (isNaN(numericPrice) || numericPrice <= 0 || numericPrice > 1000000) {
@@ -67,14 +67,14 @@ const ItemForm = ({ initialData, onSubmit }: ItemFormProps) => {
       formIsValid = false;
     }
 
-    // Validate description: at least 10 words
+    
     const wordCount = trimmedDescription.split(/\s+/).length;
     if (wordCount < 10) {
       validationErrors.description = 'Description must be at least 10 words long';
       formIsValid = false;
     }
 
-    // Validate image URL: must start with https://
+    
     if (!trimmedImage.startsWith('https://')) {
       validationErrors.image = 'Image URL must start with "https://"';
       formIsValid = false;
