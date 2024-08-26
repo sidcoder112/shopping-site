@@ -16,6 +16,7 @@ const CartManager = () => {
       if (userCart) {
         dispatch(setCart(JSON.parse(userCart)));
       }
+      
     } else {
       const guestCart = localStorage.getItem('guest_cart');
       if (guestCart) {
